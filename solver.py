@@ -138,7 +138,7 @@ def solve(tasks, input_file):
                 ordering[i], ordering[j] = ordering[j], ordering[i]
                 new_profit = calculate_profit(ordering, tasks)
                 # print(new_profit, " ", end='')
-                if new_profit > current_profit or random.random() < 0.0005:
+                if new_profit > current_profit or random.random() < 0.00001:
                     current_profit = new_profit
                 else:
                     ordering[i], ordering[j] = ordering[j], ordering[i]
