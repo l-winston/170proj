@@ -17,6 +17,7 @@ if __name__ == '__main__':
 
     total_profit = 0
     n_tests = 0
+    
     for size in os.listdir('inputs/'):
         if size not in ['small', 'medium', 'large']:
             continue
@@ -31,10 +32,10 @@ if __name__ == '__main__':
 
             output = extract(tasks, input_file)
 
-            # print(calculate_profit(output, tasks))
             total_profit += calculate_profit(output, tasks)
             write_output_file(output_path, output)
             n_tests += 1
+
     print("Total Profit: ", total_profit)
     print("n_tests: ", n_tests)
 
