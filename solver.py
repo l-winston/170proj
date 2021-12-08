@@ -147,9 +147,10 @@ def solve(tasks, input_file):
         #     pkl.dump(ordering, open("sols/" + input_file, "wb"))
         #     return truncate_ordering(ordering, tasks)
         if current_profit > best:
+            print(current_profit - best, "\t", current_profit, "\t", input_file)
             pkl.dump((ordering, current_profit), open("sols/" + input_file, "wb"))
             best = current_profit
-        print(current_profit, "\t", best, "\t", x)
+
 
     return truncate_ordering(ordering, tasks)
 
@@ -194,26 +195,16 @@ if __name__ == '__main__':
     for size in os.listdir('inputs/'):
         if size not in ['small', 'medium', 'large']:
             continue
-        for input_file in tqdm(os.listdir('inputs/{}/'.format(size))):
+        for input_file in (os.listdir('inputs/{}/'.format(size))):
             if size not in input_file:
                 continue
 
             input_path = 'inputs/{}/{}'.format(size, input_file)
             output_path = 'outputs/{}/{}.out'.format(size, input_file[:-3])
-            print(input_path, output_path)
             tasks = read_input_file(input_path)
+            print(input_path, output_path)
 
-            # output = solve(tasks, input_file)
             jobs.append(pool.apply_async(solve, (tasks, input_file)))
-            # output = extract(tasks, input_file)
-            #  output = solve_heuristic(tasks)
-
-            # print(output)
-
-            # print(calculate_profit(output, tasks))
-            # total_profit += calculate_profit(output, tasks)
-
-            # write_output_file(output_path, output)
             n_tests += 1
 
     [job.wait() for job in jobs]
