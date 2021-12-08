@@ -181,10 +181,15 @@ def calculate_profit(output, tasks):
             break
     return profit
 
+from multiprocessing import Process, Pool
+    
 # Here's an example of how to run your solver.
 if __name__ == '__main__':
     total_profit = 0
     n_tests = 0
+
+    pool = Pool(8)
+    jobs = []
 
     for size in os.listdir('inputs/'):
         if size not in ['small', 'medium', 'large']:
@@ -193,25 +198,26 @@ if __name__ == '__main__':
             if size not in input_file:
                 continue
 
-            # if not (input_file == 'large-300.in'):
-            #     continue
-
             input_path = 'inputs/{}/{}'.format(size, input_file)
             output_path = 'outputs/{}/{}.out'.format(size, input_file[:-3])
             print(input_path, output_path)
             tasks = read_input_file(input_path)
 
-            output = solve(tasks, input_file)
+            # output = solve(tasks, input_file)
+            jobs.append(pool.apply_async(solve, (tasks, input_file)))
             # output = extract(tasks, input_file)
             #  output = solve_heuristic(tasks)
 
             # print(output)
 
             # print(calculate_profit(output, tasks))
-            total_profit += calculate_profit(output, tasks)
+            # total_profit += calculate_profit(output, tasks)
 
-            write_output_file(output_path, output)
+            # write_output_file(output_path, output)
             n_tests += 1
 
+    [job.wait() for job in jobs]
+    pool.close()
+    pool.join()
     print("Total Profit: ", total_profit)
     print("n_tests: ", n_tests)
