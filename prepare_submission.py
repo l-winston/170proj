@@ -26,12 +26,12 @@ if __name__ == '__main__':
 
             input_path = 'inputs/{}/{}'.format(size, input_file)
             output_path = 'outputs/{}/{}.out'.format(size, input_file[:-3])
-            print(input_path, output_path)
+            # print(input_path, output_path)
             tasks = read_input_file(input_path)
 
             output = extract(tasks, input_file)
 
-            print(calculate_profit(output, tasks))
+            # print(calculate_profit(output, tasks))
             total_profit += calculate_profit(output, tasks)
             write_output_file(output_path, output)
             n_tests += 1
