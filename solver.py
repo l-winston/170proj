@@ -138,7 +138,7 @@ def solve(tasks, input_file):
                 ordering[i], ordering[j] = ordering[j], ordering[i]
                 new_profit = calculate_profit(ordering, tasks)
                 # print(new_profit, " ", end='')
-                if new_profit > current_profit or random.random() < 0.001:
+                if new_profit > current_profit or random.random() < 0.0005:
                     current_profit = new_profit
                 else:
                     ordering[i], ordering[j] = ordering[j], ordering[i]
@@ -151,7 +151,7 @@ def solve(tasks, input_file):
             best = current_profit
         print(current_profit, "\t", best, "\t", x)
 
-    # return truncate_ordering(ordering, tasks)
+    return truncate_ordering(ordering, tasks)
 
 def extract(tasks, input_file):
     ordering, best = pkl.load(open("sols/" + input_file, "rb"))
